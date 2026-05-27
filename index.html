@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公益慈善行业快讯</title>
+    <style>
+        /* 浅色主题（默认） */
+        :root, [data-theme="light"] {
+            --bg: #f5f7fa;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f0f4ff;
+            --bg-sidebar: #ffffff;
+            --border: #e2e8f0;
+            --text: #1a202c;
+            --text-dim: #4a5568;
+            --text-muted: #718096;
+            --accent: #0d9488;
+            --accent-light: rgba(13, 148, 136, 0.08);
+            --tab-active: #0d9488;
+            --tab-bg: rgba(13, 148, 136, 0.1);
+            --tag-policy: #dc2626;
+            --tag-policy-bg: rgba(220, 38, 38, 0.08);
+            --tag-foundation: #2563eb;
+            --tag-foundation-bg: rgba(37, 99, 235, 0.08);
+            --tag-project: #16a34a;
+            --tag-project-bg: rgba(22, 163, 74, 0.08);
+            --tag-event: #ca8a04;
+            --tag-event-bg: rgba(202, 138, 4, 0.08);
+            --tag-case: #9333ea;
+            --tag-case-bg: rgba(147, 51, 234, 0.08);
+            --tag-opinion: #ea580c;
+            --tag-opinion-bg: rgba(234, 88, 12, 0.08);
+            --timeline-line: #e2e8f0;
+            --timeline-dot: #0d9488;
+            --detail-bg: rgba(13, 148, 136, 0.04);
+            --topbar-bg: rgba(245, 247, 250, 0.92);
+            --shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        /* 深色主题 */
+        [data-theme="dark"] {
+            --bg: #0f1419;
+            --bg-card: #1a2332;
+            --bg-card-hover: #1f2d3f;
+            --bg-sidebar: #0d1117;
+            --border: #2d3748;
+            --text: #e2e8f0;
+            --text-dim: #8899a6;
+            --text-muted: #657786;
+            --accent: #00c9a7;
+            --accent-light: rgba(0, 201, 167, 0.12);
+            --tab-active: #00c9a7;
+            --tab-bg: rgba(0, 201, 167, 0.15);
+            --tag-policy: #ff6b6b;
+            --tag-policy-bg: rgba(255, 107, 107, 0.12);
+            --tag-foundation: #4dabf7;
+            --tag-foundation-bg: rgba(77, 171, 247, 0.12);
+            --tag-project: #51cf66;
+            --tag-project-bg: rgba(81, 207, 102, 0.12);
+            --tag-event: #ffd43b;
+            --tag-event-bg: rgba(255, 212, 59, 0.12);
+            --tag-case: #cc5de8;
+            --tag-case-bg: rgba(204, 93, 232, 0.12);
+            --tag-opinion: #ff922b;
+            --tag-opinion-bg: rgba(255, 146, 43, 0.12);
+            --timeline-line: #2d3748;
+            --timeline-dot: #00c9a7;
+            --detail-bg: rgba(0,0,0,0.2);
+            --topbar-bg: rgba(15, 20, 25, 0.92);
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 180px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+            box-shadow: var(--shadow);
+        }
+        .sidebar-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 32px;
+            padding: 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-logo .dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .sidebar-nav { list-style: none; flex: 1; }
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+        .sidebar-nav button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            width: 100%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
+        }
+        .sidebar-nav button:hover { background: var(--bg-card); color: var(--text); }
+        .sidebar-nav button.active {
+            background: var(--tab-bg);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .sidebar-nav .icon { font-size: 16px; width: 20px; text-align: center; }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            margin-top: auto;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-dim);
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        .theme-toggle .theme-icon { font-size: 16px; }
+
+        /* 主区域 */
+        .main {
+            margin-left: 180px;
+            padding: 0;
+        }
+
+        /* 顶部 */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--topbar-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 32px 0;
+        }
+        .top-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .top-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* Tab栏 */
+        .tabs-row {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding-bottom: 0;
+        }
+        .tabs {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+        }
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { background: var(--bg-card); color: var(--text); }
+        .tab-btn.active {
+            background: var(--tab-bg);
+            color: var(--accent);
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+        .search-input {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            color: var(--text);
+            width: 200px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus { border-color: var(--accent); width: 260px; }
+        .search-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .search-btn:hover { opacity: 0.85; }
+
+        /* 日期选择器 */
+        .date-bar {
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .date-nav-btn {
+            width: 28px; height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-dim);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .date-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .date-current {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .date-current .weekday {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .date-stats {
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .date-stats span { display: flex; align-items: center; gap: 4px; }
+        .date-stats .num { color: var(--accent); font-weight: 600; font-size: 14px; }
+
+        /* 时间轴内容 */
+        .feed {
+            padding: 0 32px 40px;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 24px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+            position: relative;
+            transition: all 0.2s;
+        }
+        .timeline-item:hover { transform: translateY(-1px); box-shadow: var(--shadow); border-color: var(--accent); }
+        .timeline-item:last-child { border-bottom: 1px solid var(--border); }
+
+        /* 时间列 */
+        .time-col {
+            display: none;
+        }
+
+        /* 内容列 */
+        .content-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .item-source {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .item-source .src-name { font-weight: 500; color: var(--text-dim); }
+        .item-source .pub-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.8;
+        }
+        .item-source .pub-date::before {
+            content: '·';
+            margin-right: 6px;
+        }
+        .item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        .item-title:hover { color: var(--accent); }
+        .item-summary {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .item-detail {
+            display: none;
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.9;
+            margin-bottom: 12px;
+            padding: 14px 16px;
+            background: var(--detail-bg);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+        .item-detail.show { display: block; }
+        .item-detail p { margin-bottom: 6px; }
+        .item-detail strong { color: var(--text); }
+
+        .item-tags {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .item-tag {
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .item-tag.policy { background: var(--tag-policy-bg); color: var(--tag-policy); }
+        .item-tag.foundation { background: var(--tag-foundation-bg); color: var(--tag-foundation); }
+        .item-tag.project { background: var(--tag-project-bg); color: var(--tag-project); }
+        .item-tag.event { background: var(--tag-event-bg); color: var(--tag-event); }
+        .item-tag.case-tag { background: var(--tag-case-bg); color: var(--tag-case); }
+        .item-tag.opinion { background: var(--tag-opinion-bg); color: var(--tag-opinion); }
+        .item-tag.enterprise { background: rgba(99, 102, 241, 0.08); color: #6366f1; }
+        [data-theme="dark"] .item-tag.enterprise { background: rgba(129, 140, 248, 0.12); color: #818cf8; }
+
+        /* 右侧操作 */
+        .action-col {
+            width: 80px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            padding-top: 2px;
+        }
+        .badge-featured {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--accent-light);
+            color: var(--accent);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .badge-featured:hover { border-color: var(--accent); }
+        .badge-featured.added { background: var(--accent); color: white; }
+
+        /* 可添加精选的按钮（非精选条目上显示） */
+        .badge-add-featured {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            border: 1px dashed var(--border);
+        }
+        .badge-add-featured:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-read {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-read:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* 推荐理由 */
+        .item-reason {
+            margin-top: 10px;
+            padding: 8px 14px;
+            background: rgba(0, 201, 167, 0.06);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 201, 167, 0.15);
+            font-size: 13px;
+            color: var(--accent);
+            line-height: 1.6;
+        }
+        .item-reason::before {
+            content: '推荐理由：';
+            font-weight: 600;
+        }
+
+        /* 隐藏项 */
+        .timeline-item.hidden { display: none; }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+            .top-bar { padding: 16px 16px 0; }
+            .feed { padding: 0 16px 40px; }
+            .date-bar { padding: 12px 16px; }
+            .search-input { width: 140px; }
+            .search-input:focus { width: 180px; }
+            .action-col { width: 60px; }
+            .time-col { width: 50px; }
+        }
+        @media (max-width: 600px) {
+            .tabs { gap: 2px; overflow-x: auto; }
+            .tab-btn { padding: 6px 12px; font-size: 13px; }
+            .search-box { display: none; }
+            .action-col { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="dot"></div>
+            公益快讯
+        </div>
+        <ul class="sidebar-nav">
+            <li><button data-cat="featured" class="active" onclick="filterTab('featured', this)"><span class="icon">⚡</span> 精选</button></li>
+            <li><button data-cat="all" onclick="filterTab('all', this)"><span class="icon">📋</span> 全部动态</button></li>
+            <li><button data-cat="policy" onclick="filterTab('policy', this)"><span class="icon">📜</span> 政策法规</button></li>
+            <li><button data-cat="foundation" onclick="filterTab('foundation', this)"><span class="icon">🏛️</span> 基金会</button></li>
+            <li><button data-cat="project" onclick="filterTab('project', this)"><span class="icon">🌱</span> 项目进展</button></li>
+            <li><button data-cat="event" onclick="filterTab('event', this)"><span class="icon">📰</span> 重大事件</button></li>
+            <li><button data-cat="case" onclick="filterTab('case', this)"><span class="icon">🔍</span> 典型案例</button></li>
+            <li><button data-cat="opinion" onclick="filterTab('opinion', this)"><span class="icon">💬</span> 行业观点</button></li>
+            <li><button data-cat="enterprise" onclick="filterTab('enterprise', this)"><span class="icon">🏢</span> 头部企业</button></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span class="theme-icon" id="theme-icon">🌙</span>
+            <span id="theme-label">深色模式</span>
+        </button>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main">
+        <div class="top-bar">
+            <div class="top-title">每日公益快讯</div>
+            <div class="top-subtitle">公益慈善领域每日高价值资讯</div>
+            <div class="tabs-row">
+                <div class="tabs">
+                    <button class="tab-btn active" data-cat="featured" onclick="filterTab('featured', this)">精选</button>
+                    <button class="tab-btn" data-cat="all" onclick="filterTab('all', this)">全部</button>
+                    <button class="tab-btn" data-cat="policy" onclick="filterTab('policy', this)">政策法规</button>
+                    <button class="tab-btn" data-cat="foundation" onclick="filterTab('foundation', this)">基金会</button>
+                    <button class="tab-btn" data-cat="project" onclick="filterTab('project', this)">项目进展</button>
+                    <button class="tab-btn" data-cat="event" onclick="filterTab('event', this)">重大事件</button>
+                    <button class="tab-btn" data-cat="case" onclick="filterTab('case', this)">典型案例</button>
+                    <button class="tab-btn" data-cat="opinion" onclick="filterTab('opinion', this)">行业观点</button>
+                    <button class="tab-btn" data-cat="enterprise" onclick="filterTab('enterprise', this)">头部企业</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="搜索标题/摘要..." oninput="searchItems(this.value)">
+                    <button class="search-btn" onclick="searchItems(document.querySelector('.search-input').value)">搜索</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 日期选择 -->
+        <div class="date-bar">
+            <button class="date-nav-btn" onclick="changeDate(-1)">‹</button>
+            <div class="date-current">
+                <span id="date-display">5月27日</span>
+                <span class="weekday" id="weekday-display">周三</span>
+            </div>
+            <button class="date-nav-btn" onclick="changeDate(1)">›</button>
+            <div class="date-stats">
+                <span>共 <span class="num" id="total-count">26</span> 条</span>
+                <span>精选 <span class="num" id="featured-count">6</span> 条</span>
+            </div>
+        </div>
+
+        <!-- 空状态提示 -->
+        <div id="empty-msg" style="display:none; flex-direction:column; align-items:center; justify-content:center; padding:80px 32px; text-align:center;">
+            <div style="font-size:48px; margin-bottom:16px; opacity:0.5;">📭</div>
+            <div style="font-size:16px; font-weight:600; color:var(--text-dim); margin-bottom:8px;">该日暂无内容</div>
+            <div style="font-size:14px; color:var(--text-muted);">快讯数据每日更新，请选择有数据的日期查看</div>
+        </div>
+
+        <!-- 时间轴Feed -->
+        <div class="feed" id="feed">
+
+
+            <!-- 1 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="enterprise" data-featured="true">
+                <div class="time-col"><span class="time">10:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">腾讯新闻 / 纵览新闻</span><span class="pub-date">2026-05-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">网红林思琪捐1047万引热议：两位粉丝出1000万，个人捐47万，善款入中华慈善总会</div>
+                    <div class="item-summary">290万粉丝博主林思琪晒出1047万银行回单，中华慈善总会官网确认5月25日收到该笔捐款。其中1000万来自两位粉丝，林思琪个人出资47万。引发"网红公益"模式与透明度讨论。</div>
+                    <div class="item-detail">
+                        <p><strong>捐款构成：</strong>总额1047万元，两位粉丝（"猩猩""明哥"）各出500万，博主本人出资47万</p>
+                        <p><strong>捐赠渠道：</strong>民政部主管的中华慈善总会，官网公示已确认</p>
+                        <p><strong>起因：</strong>5月23日直播中林思琪提到奶奶教诲"做人要有情有义"，打动两位粉丝主动联系捐款</p>
+                        <p><strong>用途：</strong>林思琪表示希望善款用于救灾、助医等公益项目</p>
+                        <p><strong>争议焦点：</strong>善款主力为粉丝但热度集中于博主；也有观点认为真金白银善举比争论更有价值</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                        <span class="item-tag event">重大事件</span>
+                    </div>
+                    <div class="item-reason">千万级个人/粉丝捐款引发全网关注，折射网红公益新生态与公信力讨论。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://new.qq.com/rain/a/20260527A02SGQ00" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 2 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="project">
+                <div class="time-col"><span class="time">09:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">共青团云南省委</span><span class="pub-date">2026-05-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">第八届中国青年志愿服务项目大赛云南地方赛暨交流会在昆开幕，155个项目同台展示</div>
+                    <div class="item-summary">12家省级单位联合主办，以"青年志愿服务与基层社会治理"为主题，140个志愿服务项目+15个公益创业项目入围终评，以成果展示、互动体验等形式打造可触摸的志愿盛宴。</div>
+                    <div class="item-detail">
+                        <p><strong>主办：</strong>共青团云南省委、省委社工部、省教育厅、省民政厅等12家单位</p>
+                        <p><strong>规模：</strong>全省征集405个项目，155个入围省赛终评（志愿服务140+公益创业15）</p>
+                        <p><strong>主题：</strong>青年志愿服务与基层社会治理</p>
+                        <p><strong>亮点项目：</strong>澜湄跨境老人母语陪伴、瑞丽银井村普通话推广、"樱桃姐姐"禁毒宣传等</p>
+                        <p><strong>形式：</strong>固定摊位展示+LED大屏展播+互动体验（中医养生/义诊/智慧助老）</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.sohu.com/a/1027493148_121106902" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 3 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="project">
+                <div class="time-col"><span class="time">09:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">东莞报业传媒</span><span class="pub-date">2026-05-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">第五届"为爱前行 情暖童心"关爱留守儿童全国公益行5月27日正式出发</div>
+                    <div class="item-summary">东莞爱心慰问团奔赴湖北红安、蕲春及安徽金寨，为留守儿童送上助学金、玩具、学习用品等。4年累计帮扶上千名留守儿童，为"东莞公益季"系列活动之一。</div>
+                    <div class="item-detail">
+                        <p><strong>路线：</strong>东莞→湖北红安/蕲春→安徽金寨</p>
+                        <p><strong>主办：</strong>东莞报业传媒集团、哈一代玩具股份；湖北省驻深办指导</p>
+                        <p><strong>协办：</strong>东莞市慈善会、东莞市湖北黄冈商会、东莞市女企业家协会等</p>
+                        <p><strong>慰问内容：</strong>颁发助学金+玩具/学习用品/东莞特产+六一节日祝福</p>
+                        <p><strong>历史：</strong>2021年启动，4年累计帮扶上千名留守儿童</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                        <span class="item-tag case-tag">典型案例</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://new.qq.com/rain/a/20260526A09S9000" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 1 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="policy" data-featured="true">
+                <div class="time-col"><span class="time">09:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国慈善家</span><span class="pub-date">2026-05-25</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">互联网募捐平台迎来"大洗牌"：新规5月1日施行后29家平台运营质量严重分化</div>
+                    <div class="item-summary">《互联网公开募捐服务平台管理办法》正式施行，要求"零收费、纯公益"，严禁商业广告。29家平台中多家"僵尸化"运行。</div>
+                    <div class="item-detail">
+                        <p><strong>准入门槛：</strong>实缴注册资本≥2000万，网络安全保护等级≥三级，无严重违法失信记录。</p>
+                        <p><strong>"零收费"刚性原则：</strong>提供信息展示、捐赠支付等服务不得收费，第三方支付成本由平台承担。</p>
+                        <p><strong>全面去商业化：</strong>严禁募捐页面插入商业广告、商业活动链接及无关互动功能（抽奖、游戏引流等）。</p>
+                        <p><strong>资金与信息分离：</strong>平台不得代收捐赠财产，善款直接进入慈善组织专属账户。</p>
+                        <p><strong>退出机制：</strong>60日未开展服务、拒不履行义务、严重违规将被取消指定。</p>
+                        <p><strong>现状：</strong>"中银公益"已沦为在线影院，携程公益四年半仅筹款5万余元，360公益仅13个项目。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag policy">政策法规</span>
+                        <span class="item-tag event">强监管</span>
+                    </div>
+                    <div class="item-reason">互联网募捐全链条监管体系建成，直接影响所有通过线上平台筹款的公益机构运作模式。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://new.qq.com/rain/a/20260525A01YC600" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="policy" data-featured="true">
+                <div class="time-col"><span class="time">09:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">民政部</span><span class="pub-date">2026-04-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">民发〔2026〕12号：慈善活动支出须"直达受益人"，管理费用按净资产分档管理</div>
+                    <div class="item-summary">民政部、财政部、税务总局联合修订发布。首次明确"到达最终受益人的款物"作为慈善活动支出计算依据，首次定义募捐成本边界。</div>
+                    <div class="item-detail">
+                        <p><strong>核心变化一 — 直达受益人：</strong>"慈善活动支出应当主要用于受益人"，将到达最终受益人的款物作为支出计算依据。</p>
+                        <p><strong>核心变化二 — 募捐成本：</strong>"募捐活动中涉及本组织场地设备和工作人员的相关费用，不得计入募捐成本"。</p>
+                        <p><strong>公募基金会分档：</strong>净资产≥6000万→支出≥6%/管理费≤10% | 2000-6000万→7%/12% | 800-2000万→8%/15% | ＜800万→8%/20%</p>
+                        <p><strong>非公募分档：</strong>净资产≥1000万→6%/13% | 500-1000万→7%/14% | 100-500万→8%/15% | ＜100万→8%且≥收入50%/20%</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag policy">政策法规</span>
+                    </div>
+                    <div class="item-reason">12号文是目前所有基金会须执行的"硬约束"，首次将"直达受益人"写入支出计算规则。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.mca.gov.cn/gdnps/pc/content.jsp?id=1662004999980010430" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="policy">
+                <div class="time-col"><span class="time">09:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">民政部</span><span class="pub-date">2026-04-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">《公开募捐平台服务管理办法》修订施行：广播电视报刊等均纳入监管</div>
+                    <div class="item-summary">明确广播、电视、报刊、网络服务商、电信运营商提供的慈善募捐服务均属公开募捐平台服务范畴，统一纳入监管。</div>
+                    <div class="item-detail">
+                        <p>与《互联网公开募捐服务平台管理办法》互补：后者专管互联网渠道，本办法覆盖传统媒体和通信渠道。</p>
+                        <p>三部慈善新规（民发12号、13号及本办法）同步施行，标志着慈善募捐全链条、全渠道制度体系基本建成。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag policy">政策法规</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.mca.gov.cn/n1288/n1290/n1316/c1662004999980010471/content.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="foundation">
+                <div class="time-col"><span class="time">08:45</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国红十字基金会</span><span class="pub-date">2026-04-24</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">中国红十字基金会发布2025年度报告："十四五"期间总收支94.84亿元</div>
+                    <div class="item-summary">"十四五"期间执行中央专项彩票公益金16.7亿元，救助白血病和先心病患儿59339人次。2025年捐赠收入超5.70亿元。</div>
+                    <div class="item-detail">
+                        <p><strong>核心数据：</strong>"十四五"总收支94.84亿 | 彩票公益金16.7亿 | 2025年捐赠5.70亿 | 公益支出5.06亿</p>
+                        <p>理事长贝晓超：基金会持续发挥"筹资主渠道"作用，筹资结构持续优化升级，风险防控体系不断健全。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag foundation">基金会</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.crcf.org.cn/mob/article.thtml?cid=19746" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="foundation">
+                <div class="time-col"><span class="time">08:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国新闻网</span><span class="pub-date">2026-04-13</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">中国乡村发展基金会2025年度受捐超10亿元 从援助型向发展型跨越</div>
+                    <div class="item-summary">受捐10.86亿元，公益支出10.59亿元，受益人次达786万。产业发展与人才培养支出占比提升至20%。</div>
+                    <div class="item-detail">
+                        <p><strong>转型亮点：</strong>从援助型向发展型、综合型跨越。</p>
+                        <p><strong>乡村建设：</strong>紧扣"低碳、韧性、宜居"，支援西藏日喀则、积石山灾区重建。</p>
+                        <p><strong>生态振兴：</strong>内蒙古、甘肃、山西造林治沙，年度支出超9242万元；新疆、黑龙江推广清洁能源。</p>
+                        <p><strong>健康保障：</strong>顶梁柱保险为低收入人群提供保障，天使工程惠及6省7县。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag foundation">基金会</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.toutiao.com/article/7628202581206008355/" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="foundation">
+                <div class="time-col"><span class="time">08:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国光彩事业基金会</span><span class="pub-date">2026-04-24</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">中国光彩事业基金会：2025年构建民企公益力量协同平台</div>
+                    <div class="item-summary">推动民企公益力量从"分散发力"向"系统集成"升级，召开民企基金会座谈会探讨健康有序发展。</div>
+                    <div class="item-detail">
+                        <p>以公益项目为牵引组织引导理事企业、民企基金会联盟成员参与光彩事业。</p>
+                        <p>搭建集约化、规范化的新时代光彩公益生态，统筹引领民营经济公益力量服务乡村振兴、民生保障、应急救灾。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag foundation">基金会</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="http://cspgp.org.cn/xxgk/lshbg/202604/t20260424_325809.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="foundation">
+                <div class="time-col"><span class="time">08:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国社会福利基金会</span><span class="pub-date">2025-05-22</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">中国社会福利基金会修订《信息公开管理办法》和《项目管理制度》</div>
+                    <div class="item-summary">信息公开须真实、完整、及时；项目立项须考虑公益性、可行性、实效性及持续性。</div>
+                    <div class="item-detail">
+                        <p><strong>公开内容：</strong>基本信息、年报财报、公募情况、项目情况、慈善信托、重大资产变动、关联交易等。</p>
+                        <p><strong>项目分类：</strong>自主发起、与捐赠人共同发起、与第三方合作发起。</p>
+                        <p>明确禁止私分、挪用、截留或侵占项目财产。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag foundation">基金会</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.cswef.org/cswef/policy/detail/id/95.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="project" data-featured="true">
+                <div class="time-col"><span class="time">07:45</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国新闻网</span><span class="pub-date">2026-05-22</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">第五届"湖北数字公益周"启动：聚焦五大领域推出品牌公益项目</div>
+                    <div class="item-summary">5月20-26日，主题"数智赋能 善泽荆楚"。聚焦乡村振兴、生命健康、扶幼助学、拥军优抚、环境保护，所有项目通过腾讯公益平台动员。</div>
+                    <div class="item-detail">
+                        <p><strong>品牌项目：</strong>"幸福家园"村社互助、罕见病儿童关爱计划、"救急难基金"、"带你看世界"乡村研学、"侨爱童心"、"长江有鱼"环保等。</p>
+                        <p><strong>活动形式：</strong>"一起捐"戴红花、"一块走"运动捐步、"答题"做好事。</p>
+                        <p><strong>透明机制：</strong>全程腾讯公益平台公示资金使用与项目进展，年底审计总结。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                    <div class="item-reason">数字公益代表性实践，腾讯公益平台全程督促信息披露，透明化机制值得参考。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://3g.wuhan.gov.cn/sy/kwh/202605/t20260522_2767563.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="project">
+                <div class="time-col"><span class="time">07:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">天眼新闻</span><span class="pub-date">2026-05-11</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">2026"互联中国公益行动"在贵阳启幕：聚焦公益与反诈深度融合</div>
+                    <div class="item-summary">中国互联网发展基金会牵头，联动互联网企业与公益组织，从"指尖捐赠"走向"价值共创"。</div>
+                    <div class="item-detail">
+                        <p>作为中国正能量网络传播专项基金支持项目，自2024年首届以来持续深耕。</p>
+                        <p>2026年聚焦公益与反诈融合，聚合网络媒介力量推动全民共筑反诈防线。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="http://www.gzpeace.gov.cn/n1314/20260511/i65712.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="project">
+                <div class="time-col"><span class="time">07:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">新华网云南</span><span class="pub-date">2026-05-08</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">2026云南数字博爱周：上线82个精品项目，2025年网筹2504万元</div>
+                    <div class="item-summary">2025年"5·8人道公益日"上线94个项目，超百万爱心人士参与。2026年聚焦大病救助、"一老一小"等领域。</div>
+                    <div class="item-detail">
+                        <p>大病救助：8家爱心企业支持，发放救助金341.4万元，惠及群众11.05万人，覆盖12州市41县。</p>
+                        <p>"公益健步走·为爱出发"设5大打卡点，签约月捐人领取徽章和专属礼包。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="http://yn.news.cn/20260508/e3ee8133eefe4b7c99953b31d4fc048c/c.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 11 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="project">
+                <div class="time-col"><span class="time">07:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">西藏商报</span><span class="pub-date">2026-05-15</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">"重塑希望"先天性手足畸形公益救治活动落地拉萨</div>
+                    <div class="item-summary">北京积水潭医院联合北京医学奖励基金会"手足情"项目组，免费义诊及手术救治。</div>
+                    <div class="item-detail">
+                        <p>专家团队：积水潭医院副院长陈山林教授等顶尖手外科专家。</p>
+                        <p>免挂号费、免费诊疗，手术费用按正常医保报销。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.tibet.cn/cn/medicine/news/202605/t20260515_7974679.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 12 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="event">
+                <div class="time-col"><span class="time">06:45</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">澎湃新闻</span><span class="pub-date">2026-05-15</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">巴菲特+库里夫妇慈善午餐以超900万美元成交</div>
+                    <div class="item-summary">时隔三年重启，172次竞标，收益由GLIDE基金会和Eat. Learn. Play.基金会平分，巴菲特承诺等额配捐。</div>
+                    <div class="item-detail">
+                        <p>成交价900.01万美元（约6100万人民币），5位竞标者。</p>
+                        <p>中标者及最多7位宾客将于6月24日在奥马哈与巴菲特及库里夫妇共进午餐。</p>
+                        <p>加上配捐，实际善款总额将超1800万美元。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag event">重大事件</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://finance.china.com.cn/industry/renwu/20260515/6307824.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 13 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="event" data-featured="true">
+                <div class="time-col"><span class="time">06:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国新闻网</span><span class="pub-date">2026-05-20</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">"数爱无疆"评出50个优秀数字公益故事：数字技术重塑公益新生态</div>
+                    <div class="item-summary">2026年中国网络文明大会上发布，从308个案例中评出50个故事，涵盖教育均衡、乡村振兴、健康关怀等。</div>
+                    <div class="item-detail">
+                        <p>典型案例：科大讯飞"雪域高原英语课"（海拔4500米AI教学）、广州援疆龙狮文化、江西寻乌AI智能吉他创作、湖南常宁"致美山海音乐会"。</p>
+                        <p>活动入选网络空间道德建设优秀案例，展现技术向善的无限可能。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag event">重大事件</span>
+                    </div>
+                    <div class="item-reason">数字公益行业标杆案例合集，可参考其中的受益人触达与反馈机制设计。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.chinanews.com.cn/cj/2026/05-20/10625228.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 14 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="event">
+                <div class="time-col"><span class="time">06:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国社会报</span><span class="pub-date">2026-04-23</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">吉林省280万专项资金支持社会组织参与乡村振兴</div>
+                    <div class="item-summary">省财政安排280万，聚焦"一老一小""一残一困"，推进医养结合、智慧助老等服务探索。</div>
+                    <div class="item-detail">
+                        <p>两大类别：民生服务关爱行动（医养结合、安宁疗护、居家助浴等）+ 基层服务能力提升（乡村振兴、兴边富民）。</p>
+                        <p>推动社会救助从单一物质向"物质+服务"综合模式转变。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag event">重大事件</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.mca.gov.cn/n2623/n2684/n2703/c1662004999980010376/content.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 15 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="case">
+                <div class="time-col"><span class="time">06:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">番禺区政府</span><span class="pub-date">2026-05-19</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">广州番禺启动社区慈善微行动：慈善资源精准下沉基层网格</div>
+                    <div class="item-summary">启动"善暖羊城"社区慈善微行动暨"慈善社区我先行"社区基金募捐行动，同步启动"6·30"乡村振兴。</div>
+                    <div class="item-detail">
+                        <p>致谢覆盖基层群众、爱心家庭、侨胞乡贤等多元群体，包括10位"向善番禺你我他"、10个"善长仁家"、42个"慈善先锋"、25家"善长仁商"等。</p>
+                        <p>推动慈善资源精准下沉基层网格，开启慈善赋能乡村发展新征程。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag case-tag">典型案例</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.panyu.gov.cn/zwgk/zfxxgkml/xxgkml/zwdt/fzxw/content/post_10817469.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 16 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="case">
+                <div class="time-col"><span class="time">05:45</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">萧山区政府</span><span class="pub-date">2026-05</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">杭州萧山发布2026年度慈善项目清单：7大类30个项目、2722万元</div>
+                    <div class="item-summary">"善行萧山"品牌覆盖助困、助医、助学、助老、崇军优抚、慈善基地、公益服务七大领域。</div>
+                    <div class="item-detail">
+                        <p>热心助困（7项/1830万）：帮扶低收入农户、环卫工人慰问、困境儿童救助等。</p>
+                        <p>仁心助医（7项/165万）、爱心助学（2项/223.5万）、暖心助老（4项/88.5万）。</p>
+                        <p>优化4个项目、新增6个项目，精准回应"急难愁盼"。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag case-tag">典型案例</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.xiaoshan.gov.cn/col/col1302903/art/2026/art_cee316ebcd4c49caabf0efa76614a5f8.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 17 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="case" data-featured="true">
+                <div class="time-col"><span class="time">05:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">人民网四川</span><span class="pub-date">2026-05-22</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">成都大邑激活"她力量"绘就乡村善治新画卷</div>
+                    <div class="item-summary">创新"板块主理人制"，农村妇女全权负责社区活动策划，构建县镇村三级社工网络。</div>
+                    <div class="item-detail">
+                        <p>"三位一体"培育：理论授课+实务督导+考证支持，培养本土持证社工。</p>
+                        <p>"板块主理人制"：社区活动策划、组织、执行全流程交妇女骨干负责。</p>
+                        <p>《新民·拾光者》社区剧场：农村女性从围着灶台到站上舞台。</p>
+                        <p>和一社工中心深耕新民村7年，形成"育骨干、创剧场、活文化、建机制"完整赋能闭环。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag case-tag">典型案例</span>
+                    </div>
+                    <div class="item-reason">乡村善治标杆——社工赋能+妇女参与治理模式，社区慈善领域可复制路径。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.toutiao.com/article/7642884392188232192/" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 18 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion">
+                <div class="time-col"><span class="time">05:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国发展简报</span><span class="pub-date">2025-11-21</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">基金会数量首现负增长：从规模扩张转向高质量发展</div>
+                    <div class="item-summary">全国基金会总数首现负增长，公募收入较2019年缩水近半。仅29%通过信息公开基础扫描。</div>
+                    <div class="item-detail">
+                        <p>基金会密度：2004年每146万人一家→2024年每14万人一家（20年×10）。</p>
+                        <p>2024年基金会总收入负增长，公募收入较2019年缩水近半。</p>
+                        <p>FTI2025覆盖9857家：仅29%通过基础扫描，898家头部未通过。</p>
+                        <p>结构变化：企业型与高校型成新成立主力；个人型/家族型净资产占比仅10%。</p>
+                        <p>南都秘书长彭艳妮：善用数据支撑决策，关注基金会对社会问题的解决成效。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.chinadevelopmentbrief.org.cn/news/detail/66586.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 19 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion">
+                <div class="time-col"><span class="time">05:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">北京基业长青</span><span class="pub-date">2025-11-21</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">公益行业建设面临"投入低水平、议题边缘化、结构不平衡"三重挑战</div>
+                    <div class="item-summary">仅约3%基金会涉足行业建设，宏观"政策支持与倡导"投入几乎空白。680家参与机构分四类角色。</div>
+                    <div class="item-detail">
+                        <p>项目集中于微观"能力建设"；中观"信息与数据""研究与知识生产"短缺；宏观近乎空白。</p>
+                        <p>四类角色：试探性参与者、临时参与者、稳健支持者、核心参与者。</p>
+                        <p>呼吁：不应依赖少数机构孤军奋战，需激发更广泛主体意识。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.chinadevelopmentbrief.org.cn/news/detail/66586.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 20 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion">
+                <div class="time-col"><span class="time">04:45</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国慈善家</span><span class="pub-date">2026-05-25</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">新规倒逼机构精简支出：平台审核趋严推动行业合规升级</div>
+                    <div class="item-summary">一线机构反馈：审核趋严，项目包装和信息披露投入增加。专家：低效平台退出是好事。</div>
+                    <div class="item-detail">
+                        <p>平台从"信息发布"转向"全流程把关"，切断公益流量收费路径。</p>
+                        <p>资金与信息分离，从制度上防范挪用。</p>
+                        <p>募捐信息记录保存≥3年，数据实时共享至全国慈善信息公开平台。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://new.qq.com/rain/a/20260525A01YC600" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 21 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion" data-featured="true">
+                <div class="time-col"><span class="time">04:30</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国慈善家 / 公益时报</span><span class="pub-date">2026-04-30</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">民发12号"直达受益人"条款全网深度解读：争议、边界与落地路径</div>
+                    <div class="item-summary">业界围绕"最终受益人"认定、服务型项目适配性、执行周期与支出确认等核心问题展开多维度讨论。专家呼吁避免"一刀切"执行。</div>
+                    <div class="item-detail">
+                        <p><strong>【争议焦点一】"最终受益人"如何认定？</strong></p>
+                        <p>何国科（北京致诚社会组织矛盾调处与研究中心）指出：不能将"主要用于受益人"理解为"将款物直接发给受助的自然人"。第十二条是对第四条第一款第一项"直接或委托其他组织资助给受益人的款物"的细化，不是针对所有类型项目。</p>
+                        <p><strong>【争议焦点二】服务型项目如何适用？</strong></p>
+                        <p>服务型慈善项目（如社区服务、心理辅导、文化传播）无直接款物交付，支出多为人员和场地费用，"直达受益人"标准难以适配。官方回应：项目人员报酬、培训、物流等合理支出，只要服务受益人，均可计入慈善活动支出。第十二条重点防范传统款物捐赠项目的"空转"，并非约束公益创新。</p>
+                        <p><strong>【争议焦点三】执行周期与支出确认】</strong></p>
+                        <p>全国性慈善组织普遍依托基层合作方执行项目，款物从总部到受益人需经物流、中转、发放等环节，周期较长。未到达前不得认定支出，可能导致机构年度支出比例难以达标。</p>
+                        <p><strong>【核心制度逻辑】</strong></p>
+                        <p>直击行业痛点——部分项目款物在合作方之间"空转"、长期滞留、层层划转。以"到达受益人"为认定节点，倒逼慈善组织履行第一责任人义务，委托执行不能"一拨了之"，必须建立全程跟踪、闭环管理机制，核验签收记录、服务凭证、资金流向。</p>
+                        <p><strong>【专家提醒】</strong></p>
+                        <p>若地方监管、审计部门对第十二条采取机械解读、"一刀切"执行，不区分机构类型、项目模式与执行周期，极易对创新型、服务型、文化类、环保类等非款物直接发放类项目造成不必要束缚。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                        <span class="item-tag policy">政策解读</span>
+                    </div>
+                    <div class="item-reason">12号文的核心争议和落地路径深度解读，对理解"直达受益人"的制度边界具有关键参考价值。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.zgcsj.com/rd/2026-04-30/2182.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 22 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion">
+                <div class="time-col"><span class="time">04:15</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">锦天城律所（王丽）</span><span class="pub-date">2026-04-30</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">律师解读民发12号五大核心要点：慈善信托"拨付即支出"做法已不适用</div>
+                    <div class="item-summary">过去直接将资金拨付给信托公司即算支出的做法不再适用。资金必须真正到达受益人手中才能确认支出。</div>
+                    <div class="item-detail">
+                        <p><strong>要点一：</strong>通过合作方、项目执行方、慈善信托受托人等其他组织向最终受益人提供资助的款物，在资金实际到达受益人之前，不得计入慈善活动支出。</p>
+                        <p><strong>要点二：</strong>"拨付即支出"历史终结——过去直接将资金拨付给信托公司设立慈善信托即算作完成支出，如今已不再适用。</p>
+                        <p><strong>要点三：</strong>募捐成本首次量化——年度募捐成本不得超过近三年捐赠收入平均数的3%，且本组织场地设备和工作人员费用不得计入。</p>
+                        <p><strong>要点四：</strong>管理费用新增可列支项——监事会工作经费、党建工作经费明确可从管理费列支。</p>
+                        <p><strong>要点五：</strong>2026年度即须执行——慈善组织应当按新规确认2026年度全部支出、管理费用和募捐成本。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                        <span class="item-tag policy">法律解读</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.allbrightlaw.com/SH/CN/10475/4d3098e3942e388a.aspx" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 23 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="opinion">
+                <div class="time-col"><span class="time">04:00</span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国社会报（多位专家）</span><span class="pub-date">2026-05-08</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">如何规范管好慈善"募捐账本"：专家学者、从业者一席谈</div>
+                    <div class="item-summary">以近三年收入平均值为基数、募捐成本≤3%。专家称新规解决了"成本与收入不匹配"行业难题，预留弹性空间。</div>
+                    <div class="item-detail">
+                        <p><strong>杨方方（浙江工商大学英贤慈善学院教授）：</strong>细化了募捐成本管理要求，让募捐收支账目清晰透明，既便于内部管理，也方便公众监督。</p>
+                        <p><strong>李健：</strong>以近三年捐赠收入平均值为核算基数，有效解决了单年度筹款波动大、成本与收入不匹配的行业难题，核算方式更科学合理。</p>
+                        <p><strong>黄浩明（海南亚洲公益研究院院长）：</strong>传递了"慈善募捐有合理成本"的理念，推动公众认知回归理性，是行业观念层面的重要进步。</p>
+                        <p><strong>凌春香：</strong>常态化落实可推动慈善组织建立自查自纠、降本增效的长效运营机制，带动整个行业形成合规透明的氛围。</p>
+                        <p><strong>业界共识：</strong>《规定》的实施是慈善组织补齐运营短板、提升专业化水平的重要契机。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag opinion">行业观点</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.mca.gov.cn/n2623/n2684/n2703/c1662004999980010597/content.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 24 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">公益时报</span><span class="pub-date">2026-05-07</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">腾讯公益秘书长刘洲鸿：以数字技术重构公益逻辑，探索"科技向善"新范式</div>
+                    <div class="item-summary">数字技术正推动公益从"单向输送"转向"以受益人为中心"的精准连接。传统公益组织需重塑核心价值，与各方协同共创。</div>
+                    <div class="item-detail">
+                        <p><strong>核心观点：</strong>腾讯基金会依托AI、大数据等技术深度融入公益场景，将企业核心能力转化为可持续社会价值。</p>
+                        <p><strong>实践方向：</strong>从生物多样性到文化遗产的"数字守护"；数字技术推动公益从单向输送转向精准连接。</p>
+                        <p><strong>行业呼吁：</strong>传统公益组织需重塑核心价值，实现商业与社会价值的深度融合。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="http://www.gongyishibao.com/html/renwuguandian/2026/05/32956.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 25 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中新网新疆</span><span class="pub-date">2026-05-08</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">腾讯公益区域公益节首次落地新疆："善行天山"7月启动七项重点活动</div>
+                    <div class="item-summary">腾讯公益联合新疆红石慈善基金会打造区域公益节，以"文化润疆"为抓手，6月13日启动，7-8月集中开展。</div>
+                    <div class="item-detail">
+                        <p><strong>七项重点活动：</strong></p>
+                        <p>1. "小红花聚爱·情暖天山"慈善盛典——民族歌舞助力乡村教育</p>
+                        <p>2. "爱心传杯·情暖新疆"——定制小红花杯联动全疆公益团队接力</p>
+                        <p>3. "天山小红花·好事巴扎秀"——地标商圈+非遗展演+数字互动</p>
+                        <p>4. "公益赋能·文化传情"漫展——参与第四届新疆动漫节</p>
+                        <p>5. "童声颂党恩 书香润天山"——56个民族少年诵读经典</p>
+                        <p>6. "社区公益深耕行动"——乌昌40个社区"一老一小"精准服务</p>
+                        <p>7. 庆祝建党105周年暨2026暑期社会实践公益行</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.xj.chinanews.com.cn/dizhou/2026-05-08/detail-ihfefuir8011484.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 26 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">极星电报</span><span class="pub-date">2026-05-05</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">小米公益基金会：规划捐赠17.8亿元，已资助1.62万名学生和1082名青年教师</div>
+                    <div class="item-summary">雷军五四青年节分享最新公益成果。小米奖助学金+青年学者两大项目各规划5亿元，覆盖65所高校。</div>
+                    <div class="item-detail">
+                        <p><strong>三大核心领域：</strong>科技创新、人才培养、扶危济困</p>
+                        <p><strong>规模：</strong>规划捐赠总额突破17.8亿元</p>
+                        <p><strong>小米奖助学金（5亿）：</strong>面向双一流高校本科生与硕士生，已覆盖60所高校，资助16220名学生</p>
+                        <p><strong>小米青年学者（5亿）：</strong>支持计算机、电子信息及基础学科青年科研人才，覆盖30所高校，资助1082名教师</p>
+                        <p><strong>增长：</strong>受助学生从1.2万增至1.62万（+35%），青年教师从807增至1082（+34%）</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.163.com/dy/article/KS4S4IF20556MFHY.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 27 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">搜狐</span><span class="pub-date">2026-05-09</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">美团公益基金会等多家互联网企业获"中国红十字奉献奖章"</div>
+                    <div class="item-summary">美团、贝壳等获中国人道公益事业最高荣誉之一。美团深耕应急救灾、民生保障、青少年守护、乡村振兴等领域。</div>
+                    <div class="item-detail">
+                        <p><strong>获奖企业：</strong>美团公益基金会、贝壳公益基金会、柠檬微趣、在线途游等</p>
+                        <p><strong>美团公益实践：</strong></p>
+                        <p>• 北京极端强降雨：首捐+应急响应+物资调配+商户扶持</p>
+                        <p>• 西藏定日地震、香港大埔火灾：快速响应、精准调配物资、配送暖心热食</p>
+                        <p>• 常态化公益：兼顾应急驰援与民生保障、青少年守护、特殊群体帮扶</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.sohu.com/a/1020421050_664487" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 28 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">新浪科技</span><span class="pub-date">2026-01-30</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">比亚迪与联合国教科文组织合作"追光者计划"第三季：新能源科技赋能绿色未来</div>
+                    <div class="item-summary">比亚迪30亿教育慈善基金启动，联合百余所高校设奖学金，向科技馆捐赠新能源科普展具。</div>
+                    <div class="item-detail">
+                        <p><strong>"追光者计划"第三季：</strong>依托比亚迪新能源技术+联合国教科文组织可持续发展积淀，构建公益合作新生态。</p>
+                        <p><strong>30亿教育慈善基金：</strong></p>
+                        <p>• 联合全国百余所高校设立奖学金（首批35所启动）</p>
+                        <p>• 向全国主要科技馆、博物馆捐赠新能源车技术科普展具（首批28所）</p>
+                        <p>• 校招硕博占比近70%，研发人才占比近80%</p>
+                        <p><strong>评价：</strong>世界自然保护联盟委员杜金称其"从风险评估迈向实质行动"，是中国企业以技术优势参与全球生态治理的生动实践。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://finance.sina.com.cn/tech/2026-01-30/doc-inhkauvc6918482.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 29 -->
+            <div class="timeline-item" data-date="2026-05-25" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">民政部 / 中国社会组织杂志</span><span class="pub-date">2026-04-28</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">字节跳动公益：与北大合作五年累计筹款超1000万元，2026聚焦乡村美育</div>
+                    <div class="item-summary">"创意传播管理教育创新项目"第五年，高校青年助力11个公益项目，产出素材上万条。今年首次聚焦美育公益。</div>
+                    <div class="item-detail">
+                        <p><strong>五年成果：</strong>聚焦儿童健康、乡村应急、银发关怀等领域，助力11个公益项目，累计产出公益素材上万条，筹集善款超1000万元。</p>
+                        <p><strong>2026新方向：</strong>聚焦乡村美育，传承北大美育传统，深化产教协同、实战育人模式，鼓励运用AI技术助力美育公益传播。</p>
+                        <p><strong>2025实践：</strong>首次组织师生深入公益一线——唇腭裂救助现场、乡村学校球场、乡村老人生活场景。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.mca.gov.cn/n152/n166/c1662004999980010479/content.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 30 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-26" data-cat="enterprise" data-featured="true">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">壹基金/腾讯/美团/字节</span><span class="pub-date">2026-05-25</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">壹基金2026紧急救灾行动：腾讯、美团、字节多平台联动响应南方洪涝灾害</div>
+                    <div class="item-summary">5月18日以来持续在广西、湖南、湖北、贵州、重庆等地开展救灾。腾讯发起"数字以工代赈"项目，美团支持夏季温暖包，字节支持粮油包和清淤工具。</div>
+                    <div class="item-detail">
+                        <p><strong>贵州贵定县：</strong>美团公益基金会、腾讯公益平台支持的夏季温暖包为受灾儿童发放；滴滴支持热餐2500份。</p>
+                        <p><strong>湖南石门县：</strong>字节跳动支持粮油包、清淤工具套装；腾讯支持消毒液、消杀喷雾机、应急发电机、夏凉被。</p>
+                        <p><strong>创新模式：</strong>腾讯公益慈善基金会联合壹基金发起"温暖家园——数字以工代赈"项目。</p>
+                        <p><strong>参与方：</strong>可口可乐中国、招商局慈善基金会、蒙牛乳业、北京货拉拉公益基金会等多方支持。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag enterprise">头部企业</span>
+                        <span class="item-tag event">紧急救灾</span>
+                    </div>
+                    <div class="item-reason">多家头部企业联动救灾的典型案例，"数字以工代赈"模式值得关注。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://new.qq.com/rain/a/20260525A0AOPV00" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 31 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-26" data-cat="project">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">壹基金</span><span class="pub-date">2026-05-25</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">壹基金世界足球日启动运动季：少年足球项目升级，为乡村孩子建设主场</div>
+                    <div class="item-summary">借2026世界杯热点，呼吁关注足球对青少年心理韧性与全面发展的价值。项目已在12省24县建成42座多功能篮球场。</div>
+                    <div class="item-detail">
+                        <p><strong>项目升级：</strong>"乡村儿童足球项目"更名为"少年足球项目"，新增校园足球研学营、丰富联赛和跨区域赛事。</p>
+                        <p><strong>"回响计划"成果：</strong>联合腾讯成长守护平台，12省24县建成42座多功能篮球场，捐赠体育器材超1.8万件，培训体育教师75名，惠及31255名乡村少年。</p>
+                        <p><strong>理念：</strong>从"有球踢"到"踢得好"，助力乡村校园足球发展。</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.163.com/dy/article/KTQDKER305259AJ7.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 32 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-26" data-cat="event">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">新京报</span><span class="pub-date">2026-05-25</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">北京"花开北京·健步向善"慈善义工徒步行：1+16区3000人联动</div>
+                    <div class="item-summary">北京市园林绿化局联合北京市慈善义工联合会举办，全市16区同步发力，打造首都年度标志性公益健身品牌活动。</div>
+                    <div class="item-detail">
+                        <p><strong>规模：</strong>全市1+16区近3000名慈善义工及市民参与</p>
+                        <p><strong>主会场：</strong>奥林匹克森林公园北园</p>
+                        <p><strong>创新模式：</strong>"1+16"全域联动，打破地域时空界限，16区同步行动</p>
+                        <p><strong>意义：</strong>推动公益事业与全民健身深度融合，弘扬"奉献、友爱、互助、进步"新时代志愿精神</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag event">重大事件</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.bjnews.com.cn/detail/1779669324019308.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 33 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-26" data-cat="foundation">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国乡村发展基金会</span><span class="pub-date">2026-05-21</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">君联公益科技小院助力计划落地内蒙古兴和县：燕麦、谷子、肉牛三院同启</div>
+                    <div class="item-summary">在君联公益基金捐赠支持下，三个科技小院落地兴和县，以科技赋能特色产业、以人才支撑乡村发展。</div>
+                    <div class="item-detail">
+                        <p><strong>背景：</strong>中国乡村发展基金会与兴和县合作五年，此前实施百美村庄、生态林、加油足球等项目，惠及2万余人次。</p>
+                        <p><strong>本次项目：</strong>新长城科技小院助力计划，联合内蒙古农业大学，以"产学研深度融合"为目标。</p>
+                        <p><strong>三个小院：</strong>燕麦科技小院、谷子科技小院、肉牛科技小院</p>
+                        <p><strong>定位：</strong>破解技术瓶颈、健全联农带农机制、壮大村集体经济</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag foundation">基金会</span>
+                    </div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.cfpa.org.cn/notice/notice_detail2.aspx?CurrentId=40&ParentId=38&articleid=5758" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 34 今日新增 -->
+            <div class="timeline-item" data-date="2026-05-26" data-cat="project" data-featured="true">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">腾讯新闻</span><span class="pub-date">2026-05-26</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">网络公益论坛：从指尖到心间，数智之力让网络善意持续生长</div>
+                    <div class="item-summary">中国网络文明大会网络公益论坛举行。阿里高德"鹰眼守护"日均1.6亿次路况预警、陶勇医生AI眼底筛查、林依轮公益转型引热议。</div>
+                    <div class="item-detail">
+                        <p><strong>论坛主题：</strong>"善行润网 文明焕新——以网络公益助推网络文明建设高质量发展"</p>
+                        <p><strong>参会方：</strong>中央网信办、民政部等相关部委，行业协会、基金会、互联网企业、公益先锋、专家学者</p>
+                        <p><strong>亮点案例：</strong></p>
+                        <p>• 阿里高德"鹰眼守护"：云端AI大模型每天1.6亿次路况预警</p>
+                        <p>• 陶勇医生：AI眼底检查助力偏远地区眼疾筛查</p>
+                        <p>• 阿里嵇立伟："AI的意义不在于制造人机握手，而是让人与人的见面更多"</p>
+                        <p><strong>三维展现：</strong>技术赋能、价值传播、生态共建</p>
+                    </div>
+                    <div class="item-tags">
+                        <span class="item-tag project">项目进展</span>
+                        <span class="item-tag enterprise">头部企业</span>
+                    </div>
+                    <div class="item-reason">今日发布，中央网信办+民政部级别论坛，展现AI赋能公益前沿实践。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://new.qq.com/rain/a/20260526A01Z5W00" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 38 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="policy" data-featured="true">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">民政部等11部门</span><span class="pub-date">2026-04-29</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">11部门联合推进互助性养老服务：2030年城乡社区覆盖率不低于70%</div>
+                    <div class="item-summary">首次全国层面明确互助性养老定义。探索"积分制"时间银行、"幸福里"互助社区，鼓励"政府补一点、集体出一点、家庭付一点、社会捐一点"。</div>
+                    <div class="item-detail">
+                        <p><strong>目标：</strong>2030年覆盖率≥70%，2035年组织化程度进一步提高。</p>
+                        <p><strong>模式：</strong>社区居家互助+农村邻里互助+时间银行积分制+"幸福里"互助社区。</p>
+                        <p><strong>资金：</strong>政府补一点、集体出一点、家庭付一点、社会捐一点。鼓励公益慈善组织以慈善捐助方式参与。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag policy">政策法规</span></div>
+                    <div class="item-reason">民发〔2026〕11号——互助养老+积分制+公益参与，社区慈善可直接落地的模式。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.mca.gov.cn/gdnps/pc/content.jsp?id=1662004999980010493&mtype=" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 39 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="policy">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">民政部等23部门</span><span class="pub-date">2026-05-17</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">23部门联合印发《流动儿童在居住地享有关爱服务基础清单工作索引》</div>
+                    <div class="item-summary">流动儿童权益保障"实用手册"：幼有所育、学有所教、病有所医、住有所居、弱有所扶五大维度，23部门职责分工。</div>
+                    <div class="item-detail">
+                        <p><strong>核心：</strong>保障随迁子女平等义务教育、推动居住地中考高考、异地就医直接结算、孤儿认定"跨省通办"。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag policy">政策法规</span></div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.mca.gov.cn/n2623/n2684/n2703/c1662004999980010748/content.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 40 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="case" data-featured="true">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">姚界客户端</span><span class="pub-date">2026-05-27</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">让慈善成为乡村振兴"软实力"：余姚"党建+慈善"村级工作站实践</div>
+                    <div class="item-summary">"慈善一日捐"参与率连续保持80%以上，村级"爱心基金"年募集约20万元，乡贤捐赠117万助力文化大礼堂建设。</div>
+                    <div class="item-detail">
+                        <p><strong>模式：</strong>党建引领+村慈善工作站+爱心基金+点亮微心愿，打通服务"最后一米"。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag case-tag">典型案例</span></div>
+                    <div class="item-reason">基层慈善治理创新，村级工作站+爱心基金+微心愿模式可复制。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="https://www.yynews.com.cn/yy/202605/t20260527_7425819.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 41 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="opinion" data-featured="true">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">北京大学社会法学</span><span class="pub-date">2026-05-01</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">金锦萍：慈善治理的"三驾马车"是制度补丁，更应是生态重构</div>
+                    <div class="item-summary">三项新规标志慈善治理从事后补救转向事前架构。制度条文完善≠现实治理突围，需从单点约束升级为全链条生态治理。</div>
+                    <div class="item-detail">
+                        <p><strong>核心观点：</strong>制度修补回避不了行业深层结构矛盾。平台长期深陷商业流量与公益属性的内在张力。需要"平台-机构-监管"三方协同。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag opinion">行业观点</span><span class="item-tag policy">政策解读</span></div>
+                    <div class="item-reason">北大法学教授对三项新规系统评价，直指"制度补丁vs生态重构"核心命题。</div>
+                </div>
+                <div class="action-col">
+                    <span class="badge-featured added" onclick="toggleFeatured(this)">★ 精选</span>
+                    <a href="http://bijiao.org.cn/Html/KnowView.asp?ID=973&SortID=31" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 42 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="enterprise">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">公益时报</span><span class="pub-date">2026-05-21</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">易宝公益平台累计募捐善款突破10亿元：支付机构公益进入常态化</div>
+                    <div class="item-summary">1600万份捐赠、上百家慈善组织。支付机构长期参与互联网公开募捐的形态，推出月捐、企业慈善卡、消费捐等创新模式。</div>
+                    <div class="item-detail">
+                        <p><strong>定位：</strong>民政部指定29家互联网公开募捐平台之一，以支付业务为基础提供捐赠通道和解决方案。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag enterprise">头部企业</span></div>
+                </div>
+                <div class="action-col">
+                    <a href="http://www.gongyishibao.com/html/gongyizixun/2026/05/33094.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 43 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="project">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">新京报</span><span class="pub-date">2026-05-12</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">备灾公益节在水立方启动：腾讯首个议题公益节，数字化工具助推备灾破圈</div>
+                    <div class="item-summary">中国社会福利基金会主办，腾讯公益提供资金+数字化工具。线上答题/捐步/视频号+线下益码通，为达标项目提供四重激励金。</div>
+                    <div class="item-detail">
+                        <p><strong>参与方：</strong>中国灾害防御协会、乡基会、思源基金会、红基会、壹基金、爱德基金会等。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag project">项目进展</span><span class="item-tag enterprise">头部企业</span></div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.163.com/dy/article/KSOEEVM10512D3VJ_pdya11y.html" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+            <!-- 44 2026-05-27 -->
+            <div class="timeline-item" data-date="2026-05-27" data-cat="project">
+                <div class="time-col"><span class="time"></span></div>
+                <div class="content-col">
+                    <div class="item-source"><span class="src-name">中国新闻网</span><span class="pub-date">2026-05-26</span></div>
+                    <div class="item-title" onclick="toggleDetail(this)">浦发银行"绿谷"生态林：员工碳足迹积分→环交所折算→黄河上游植树10000棵</div>
+                    <div class="item-summary">联合中国青少年发展基金会，员工低碳行为积攒减碳量→上海环交所CEA折算善款→黄河上游荒山植树。入选"数爱无疆"50佳。</div>
+                    <div class="item-detail">
+                        <p><strong>创新模式：</strong>个人碳足迹→碳交易折算→公益捐赠→生态修复的完整闭环。</p>
+                    </div>
+                    <div class="item-tags"><span class="item-tag project">项目进展</span><span class="item-tag enterprise">头部企业</span></div>
+                </div>
+                <div class="action-col">
+                    <a href="https://www.chinanews.com.cn/sh/2026/05-26/10628551.shtml" target="_blank" class="btn-read">原文 ↗</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // 日期相关变量（必须在filterTab之前声明）
+        var availableDates = ['2026-05-25', '2026-05-26', '2026-05-27'];
+        var currentDate = new Date(2026, 4, 27);
+        var weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+
+        function formatDateKey(d) {
+            var y = d.getFullYear();
+            var m = String(d.getMonth() + 1).padStart(2, '0');
+            var dd = String(d.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + dd;
+        }
+
+        // Tab筛选
+        function filterTab(cat, srcEl) {
+            // 更新顶部Tab高亮
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            var topTab = document.querySelector('.tab-btn[data-cat="' + cat + '"]');
+            if (topTab) topTab.classList.add('active');
+            
+            // 更新侧边栏高亮
+            document.querySelectorAll('.sidebar-nav button').forEach(function(b) { b.classList.remove('active'); });
+            if (srcEl && srcEl.closest('.sidebar-nav')) {
+                srcEl.classList.add('active');
+            } else {
+                var sideBtn = document.querySelector('.sidebar-nav button[data-cat="' + cat + '"]');
+                if (sideBtn) sideBtn.classList.add('active');
+            }
+
+            // 筛选项目（同时考虑当前日期）
+            var items = document.querySelectorAll('.timeline-item');
+            var shown = 0;
+            var featured = 0;
+            var dateKey = formatDateKey(currentDate);
+            items.forEach(function(item) {
+                var isFeatured = item.getAttribute('data-featured') === 'true';
+                var itemCat = item.getAttribute('data-cat');
+                var itemDate = item.getAttribute('data-date') || '2026-05-25';
+                var shouldShow = false;
+
+                // 日期精确匹配
+                var dateMatch = (itemDate === dateKey);
+
+                if (cat === 'featured') {
+                    shouldShow = isFeatured && dateMatch;
+                } else if (cat === 'all') {
+                    shouldShow = dateMatch;
+                } else {
+                    shouldShow = (itemCat === cat) && dateMatch;
+                }
+
+                if (shouldShow) {
+                    item.classList.remove('hidden');
+                    shown++;
+                    if (isFeatured) featured++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            document.getElementById('total-count').textContent = shown;
+            document.getElementById('featured-count').textContent = featured;
+        }
+
+        // 精选切换
+        function toggleFeatured(btn) {
+            var item = btn.closest('.timeline-item');
+            var isFeatured = item.getAttribute('data-featured') === 'true';
+            
+            if (isFeatured) {
+                // 取消精选
+                item.setAttribute('data-featured', 'false');
+                btn.classList.remove('added');
+                btn.textContent = '+ 精选';
+                btn.className = 'badge-add-featured';
+                btn.setAttribute('onclick', 'toggleFeatured(this)');
+            } else {
+                // 添加精选
+                item.setAttribute('data-featured', 'true');
+                btn.classList.add('added');
+                btn.textContent = '★ 精选';
+                btn.className = 'badge-featured added';
+                btn.setAttribute('onclick', 'toggleFeatured(this)');
+            }
+            
+            // 如果当前在精选视图，刷新显示
+            var activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab && activeTab.getAttribute('data-cat') === 'featured') {
+                filterTab('featured', activeTab);
+            }
+            // 更新计数
+            updateCounts();
+        }
+
+        function updateCounts() {
+            var items = document.querySelectorAll('.timeline-item');
+            var total = 0, featured = 0;
+            items.forEach(function(item) {
+                if (!item.classList.contains('hidden')) total++;
+                if (item.getAttribute('data-featured') === 'true') featured++;
+            });
+            document.getElementById('featured-count').textContent = featured;
+        }
+
+        // 初始化：给没有精选标记的条目加上 "+ 精选" 按钮
+        (function initFeaturedButtons() {
+            var items = document.querySelectorAll('.timeline-item');
+            items.forEach(function(item) {
+                var actionCol = item.querySelector('.action-col');
+                var hasBadge = actionCol.querySelector('.badge-featured, .badge-add-featured');
+                if (!hasBadge) {
+                    var btn = document.createElement('span');
+                    btn.className = 'badge-add-featured';
+                    btn.textContent = '+ 精选';
+                    btn.setAttribute('onclick', 'toggleFeatured(this)');
+                    actionCol.insertBefore(btn, actionCol.firstChild);
+                }
+            });
+            // 默认加载：今天日期 + 精选视图
+            filterTab('featured', document.querySelector('.sidebar-nav button[data-cat="featured"]'));
+        })();
+
+        // 搜索
+        function searchItems(query) {
+            const q = query.toLowerCase().trim();
+            const items = document.querySelectorAll('.timeline-item');
+            let shown = 0;
+            items.forEach(item => {
+                const title = item.querySelector('.item-title').textContent.toLowerCase();
+                const summary = item.querySelector('.item-summary').textContent.toLowerCase();
+                if (!q || title.includes(q) || summary.includes(q)) {
+                    item.classList.remove('hidden');
+                    shown++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            document.getElementById('total-count').textContent = shown;
+        }
+
+        // 展开详情
+        function toggleDetail(titleEl) {
+            const card = titleEl.closest('.content-col');
+            const detail = card.querySelector('.item-detail');
+            detail.classList.toggle('show');
+        }
+
+        // 日期切换
+
+        function changeDate(delta) {
+            currentDate.setDate(currentDate.getDate() + delta);
+            var month = currentDate.getMonth() + 1;
+            var day = currentDate.getDate();
+            document.getElementById('date-display').textContent = month + '月' + day + '日';
+            document.getElementById('weekday-display').textContent = weekdays[currentDate.getDay()];
+
+            var dateKey = formatDateKey(currentDate);
+            var hasData = availableDates.indexOf(dateKey) !== -1;
+
+            var feed = document.getElementById('feed');
+            var emptyMsg = document.getElementById('empty-msg');
+
+            if (hasData) {
+                feed.style.display = 'block';
+                emptyMsg.style.display = 'none';
+                // 按日期+当前分类筛选
+                var activeTab = document.querySelector('.tab-btn.active');
+                var cat = activeTab ? activeTab.getAttribute('data-cat') : 'all';
+                filterByDate(dateKey, cat);
+            } else {
+                feed.style.display = 'none';
+                emptyMsg.style.display = 'flex';
+                document.getElementById('total-count').textContent = '0';
+                document.getElementById('featured-count').textContent = '0';
+            }
+        }
+
+        function filterByDate(dateKey, cat) {
+            var items = document.querySelectorAll('.timeline-item');
+            var shown = 0, featured = 0;
+            items.forEach(function(item) {
+                var itemDate = item.getAttribute('data-date') || '2026-05-25';
+                var itemCat = item.getAttribute('data-cat');
+                var isFeatured = item.getAttribute('data-featured') === 'true';
+
+                // 精确匹配：只显示选中日期当天的内容
+                var dateMatch = (itemDate === dateKey);
+
+                var catMatch = false;
+                if (cat === 'featured') {
+                    catMatch = isFeatured;
+                } else if (cat === 'all') {
+                    catMatch = true;
+                } else {
+                    catMatch = (itemCat === cat);
+                }
+
+                if (dateMatch && catMatch) {
+                    item.classList.remove('hidden');
+                    shown++;
+                    if (isFeatured) featured++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            document.getElementById('total-count').textContent = shown;
+            document.getElementById('featured-count').textContent = featured;
+        }
+
+        // 主题切换
+        let currentTheme = 'light';
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            document.getElementById('theme-icon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            document.getElementById('theme-label').textContent = currentTheme === 'light' ? '深色模式' : '浅色模式';
+            localStorage.setItem('charity-news-theme', currentTheme);
+        }
+        // 读取上次选择
+        (function() {
+            const saved = localStorage.getItem('charity-news-theme');
+            if (saved === 'dark') {
+                currentTheme = 'dark';
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').textContent = '☀️';
+                document.getElementById('theme-label').textContent = '浅色模式';
+            }
+        })();
+    </script>
+</body>
+</html>
